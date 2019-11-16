@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.scrumpoker.Models.Answer;
+import com.example.scrumpoker.Models.SessionState;
+import com.example.scrumpoker.Models.Sessions;
 import com.example.scrumpoker.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -19,6 +21,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -71,6 +75,28 @@ public class ObserveFragment extends Fragment {
         recyclerView.setAdapter(answerAdapter);
         recyclerView.setHasFixedSize(true);
 
+        final DatabaseReference sessionStateReference = database.getReference().child("SessionsState");
+        Query query = sessionStateReference
+                .orderByChild("SessionName")
+                .equalTo(sessionName);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    SessionState upsess = new SessionState(sessionName,true);
+                    Map<String, Object> sessValues = upsess.toMap();
+                    Map<String, Object> childUpdates = new HashMap<>();
+                    childUpdates.put(dataSnapshot1.getKey(), sessValues);
+                    sessionStateReference.updateChildren(childUpdates);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         DatabaseReference userResponsesReference = database.getReference().child("Responses");
         userResponsesReference.addChildEventListener(new ChildEventListener() {
             @Override
@@ -112,6 +138,27 @@ public class ObserveFragment extends Fragment {
     }
 
     private void endSession() {
+        final DatabaseReference sessionStateReference = database.getReference().child("SessionsState");
+        Query query = sessionStateReference
+                .orderByChild("SessionName")
+                .equalTo(sessionName);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    SessionState upsess = new SessionState(sessionName,false);
+                    Map<String, Object> sessValues = upsess.toMap();
+                    Map<String, Object> childUpdates = new HashMap<>();
+                    childUpdates.put(dataSnapshot1.getKey(), sessValues);
+                    sessionStateReference.updateChildren(childUpdates);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         //Close session
         getActivity().finish();
     }

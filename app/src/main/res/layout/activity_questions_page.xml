@@ -18,12 +18,19 @@
         android:id="@+id/questions_tv_session_timelimit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="///" />
+        android:text="No time limit set" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/questions_btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Delete Session" />
 
         <Button
             android:id="@+id/questions_btn_create"
@@ -58,6 +65,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:contentDescription="Add Question"
-            android:src="@android:drawable/ic_input_add" />
+            android:src="@android:drawable/ic_input_add"
+            app:backgroundTint="@color/colorPrimary" />
     </FrameLayout>
 </LinearLayout>

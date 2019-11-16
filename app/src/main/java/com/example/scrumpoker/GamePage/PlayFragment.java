@@ -74,6 +74,49 @@ public class PlayFragment extends Fragment {
             }
         });
 
+        DatabaseReference sessionStateReference = database.getReference().child("SessionsState");
+        sessionStateReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                boolean active = dataSnapshot.child("Available").getValue(boolean.class);
+                if(active == true){
+                    loadData();
+                }else{
+                    getActivity().finish();
+                }
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, @Nullable String s) {
+                boolean active = dataSnapshot.child("Available").getValue(boolean.class);
+                if(active == true){
+                    loadData();
+                }else{
+                    getActivity().finish();
+                }
+            }
+        });
+
+        return view;
+    }
+
+    void loadData(){
+
         DatabaseReference sessionReference = database.getReference().child("Sessions");
         sessionReference.addChildEventListener(new ChildEventListener() {
             @Override
@@ -151,7 +194,6 @@ public class PlayFragment extends Fragment {
             }
         });
 
-        return view;
     }
 
 

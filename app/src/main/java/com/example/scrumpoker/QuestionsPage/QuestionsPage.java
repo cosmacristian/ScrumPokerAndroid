@@ -46,6 +46,7 @@ public class QuestionsPage extends AppCompatActivity implements OnItemClickListe
     TextView nameDisplay;
     TextView timeDisplay;
     Button sessionButton;
+    Button deleteButton;
     Button timeButton;
     RecyclerView recyclerView;
     QuestionAdapter questionAdapter;
@@ -72,6 +73,14 @@ public class QuestionsPage extends AppCompatActivity implements OnItemClickListe
                 OnSessionButtonPressed();
             }
         });
+        deleteButton = findViewById(R.id.questions_btn_delete);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OnDeleteButtonPressed();
+            }
+        });
+        deleteButton.setVisibility(View.GONE);
         recyclerView = findViewById(R.id.questions_recycler);
         addNewQuestionButton = findViewById(R.id.questions_fab);
         timeButton = findViewById(R.id.questions_btn_set_time);
@@ -98,6 +107,7 @@ public class QuestionsPage extends AppCompatActivity implements OnItemClickListe
         questionAdapter.setOnItemClickListener(this);
 
         if(sessionAction.equals("Edit Session")){
+            deleteButton.setVisibility(View.VISIBLE);
             DatabaseReference sessionReference = database.getReference().child("Sessions");
             sessionReference.addChildEventListener(new ChildEventListener() {
                 @Override
@@ -160,6 +170,70 @@ public class QuestionsPage extends AppCompatActivity implements OnItemClickListe
                 }
             });
         }
+    }
+
+    private void OnDeleteButtonPressed() {
+        DatabaseReference questionsReference = database.getReference().child("Questions");
+        Query applesQuery = questionsReference.orderByChild("SessionName").equalTo(sessionName);
+        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot itemSnapshot: dataSnapshot.getChildren()) {
+                    itemSnapshot.getRef().removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        DatabaseReference userResponsesReference = database.getReference().child("Responses");
+        applesQuery = userResponsesReference.orderByChild("SessionName").equalTo(sessionName);
+        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot itemSnapshot: dataSnapshot.getChildren()) {
+                    itemSnapshot.getRef().removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        DatabaseReference sessionStateReference = database.getReference().child("SessionsState");
+        applesQuery = sessionStateReference.orderByChild("SessionName").equalTo(sessionName);
+        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot itemSnapshot: dataSnapshot.getChildren()) {
+                    itemSnapshot.getRef().removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        DatabaseReference sessionReference = database.getReference().child("Sessions");
+        applesQuery = sessionReference.orderByChild("SessionName").equalTo(sessionName);
+        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot itemSnapshot: dataSnapshot.getChildren()) {
+                    itemSnapshot.getRef().removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        finish();
     }
 
 

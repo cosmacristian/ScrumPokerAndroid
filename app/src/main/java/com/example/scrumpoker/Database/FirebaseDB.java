@@ -2,6 +2,7 @@ package com.example.scrumpoker.Database;
 
 import com.example.scrumpoker.Models.Answer;
 import com.example.scrumpoker.Models.Question;
+import com.example.scrumpoker.Models.SessionState;
 import com.example.scrumpoker.Models.Sessions;
 import com.example.scrumpoker.Models.Users;
 import com.google.firebase.database.DataSnapshot;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 public class FirebaseDB {
     public static FirebaseDatabase database = FirebaseDatabase.getInstance();
     static DatabaseReference sessionReference = database.getReference().child("Sessions");
+    static DatabaseReference sessionStateReference = database.getReference().child("SessionsState");
     static DatabaseReference questionsReference = database.getReference().child("Questions");
     static DatabaseReference usersReference = database.getReference().child("Users");
     static DatabaseReference userResponsesReference = database.getReference().child("Responses");
@@ -51,6 +53,9 @@ public class FirebaseDB {
             Sessions session = new Sessions(sessionName,timeLimit,createdByUID);
             String key = sessionReference.push().getKey();
             sessionReference.child(key).setValue(session);
+            SessionState state = new SessionState(sessionName,false);
+            sessionStateReference.push().getKey();
+            sessionStateReference.child(key).setValue(state);
             return key;
         }
 

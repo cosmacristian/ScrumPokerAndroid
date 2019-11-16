@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <TextView
@@ -17,7 +17,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="50dp"
-        android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="24sp" />
 
@@ -27,8 +26,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:text="TextView" />
+        android:paddingBottom="20dp" />
 
     <Spinner
         android:id="@+id/play_sp_dropdown"
@@ -50,5 +48,6 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:contentDescription="Sumbit answer"
-        android:src="@android:drawable/ic_menu_send" />
+        android:src="@android:drawable/ic_menu_send"
+        app:backgroundTint="@color/colorPrimary" />
 </LinearLayout>

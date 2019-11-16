@@ -28,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 public class ScrumPokerPage extends AppCompatActivity {
     Users user;
     private FirebaseAuth mAuth;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,7 @@ public class ScrumPokerPage extends AppCompatActivity {
             fragmentTransaction.add(R.id.pokerpage_fragment_container, fragment);
         }
         fragmentTransaction.commit();*/
+        fragmentManager = getSupportFragmentManager();
     }
 
     @Override
@@ -78,14 +81,13 @@ public class ScrumPokerPage extends AppCompatActivity {
                 if(id.equals(uid)){
                     String role = dataSnapshot.child("Role").getValue(String.class);//.toString();
                     if(findViewById(R.id.pokerpage_fragment_container) != null){
-                        FragmentManager fragmentManager = getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction = fragmentManager.beginTransaction();
                         if(role.equals("Master")){
                             MasterFragment fragment = new MasterFragment();
-                            fragmentTransaction.add(R.id.pokerpage_fragment_container, fragment);
+                            fragmentTransaction.replace(R.id.pokerpage_fragment_container, fragment);
                         }else{
                             DeveloperFragment fragment = new DeveloperFragment();
-                            fragmentTransaction.add(R.id.pokerpage_fragment_container, fragment);
+                            fragmentTransaction.replace(R.id.pokerpage_fragment_container, fragment);
                         }
                         fragmentTransaction.commit();
                     }
