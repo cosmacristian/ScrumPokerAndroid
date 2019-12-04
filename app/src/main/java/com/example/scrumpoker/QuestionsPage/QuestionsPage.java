@@ -8,6 +8,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +38,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +65,22 @@ public class QuestionsPage extends AppCompatActivity implements OnItemClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions_page);
         Intent intent = getIntent();
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        OnDeleteButtonPressed();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener);
         sessionName = intent.getStringExtra("sessionName");
         sessionAction = intent.getStringExtra("sessionAction");
         nameDisplay = findViewById(R.id.questions_tv_session_name);
@@ -77,7 +97,7 @@ public class QuestionsPage extends AppCompatActivity implements OnItemClickListe
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OnDeleteButtonPressed();
+                builder.show();
             }
         });
         deleteButton.setVisibility(View.GONE);
@@ -162,9 +182,11 @@ public class QuestionsPage extends AppCompatActivity implements OnItemClickListe
                 public void onChildAdded(DataSnapshot dataSnapshot, @Nullable String s) {
                     String sessname = dataSnapshot.child("SessionName").getValue(String.class);
                     String text = dataSnapshot.child("QuestionText").getValue(String.class);//.toString();
+                    boolean active = dataSnapshot.child("IsActive").getValue(boolean.class);
+                    Date expDate = dataSnapshot.child("ExpirationDate").getValue(Date.class);
                     if(sessname.equals(sessionName)) {
-                        questions.add(new Question(sessname, text));
-                        questionAdapter.notifyItemInserted(questions.size());
+                        questions.add(new Question(sessname, text,active, expDate));
+                        questionAdapter.notifyItemInserted(questions.size());//   Still not good!
                     }
                     //questionAdapter.AddNewItem(new Question(sessname,text));
                 }
@@ -247,7 +269,7 @@ public class QuestionsPage extends AppCompatActivity implements OnItemClickListe
             //when created
             FirebaseDB.Instance.CreateNewSession(sessionName,selectedTime,mAuth.getUid());
             for (Question item : questions) {
-                FirebaseDB.Instance.InsertQuestion(item.QuestionText,item.SessionName);
+                FirebaseDB.Instance.InsertQuestion(item.QuestionText,item.SessionName,item.IsActive,item.ExpirationDate);
             }
             finish();
         }else{
@@ -290,7 +312,7 @@ public class QuestionsPage extends AppCompatActivity implements OnItemClickListe
                 }
             });
             for (Question item : questions) {
-                FirebaseDB.Instance.InsertQuestion(item.QuestionText,item.SessionName);
+                FirebaseDB.Instance.InsertQuestion(item.QuestionText,item.SessionName,item.IsActive,item.ExpirationDate);
             }
             finish();
         }
@@ -315,6 +337,13 @@ public class QuestionsPage extends AppCompatActivity implements OnItemClickListe
     }
 
     @Override
+    public void onSwitchClick(int position){
+        Question temp = questions.get(position);
+        temp.IsActive = !(temp.IsActive);
+        questions.set(position,temp);
+    }
+
+    @Override
     public void onLongPress(int position) {
         QuestionDialog dialog = new QuestionDialog(questions.get(position), position);
 
@@ -322,13 +351,14 @@ public class QuestionsPage extends AppCompatActivity implements OnItemClickListe
     }
 
     @Override
-    public void sendInput(String input,int pos,boolean isEdit) {//MIGHT NOT BE GOOD
+    public void sendInput(String input,Date selectedDate, int pos,boolean isEdit) {//MIGHT NOT BE GOOD
         if(isEdit) {
             Question temp = questions.get(pos);
             temp.QuestionText = input;
+            temp.ExpirationDate = selectedDate;
             questionAdapter.notifyItemChanged(pos);
         }else{
-            questions.add(new Question(sessionName,input));
+            questions.add(new Question(sessionName,input,selectedDate));
             questionAdapter.notifyItemInserted(questions.size());
             //questionAdapter.AddNewItem(new Question(sessionName,input));
         }

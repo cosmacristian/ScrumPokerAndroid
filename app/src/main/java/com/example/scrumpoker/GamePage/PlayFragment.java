@@ -25,6 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,6 +48,8 @@ public class PlayFragment extends Fragment {
     TextView timeDisplay;
     CountDownTimer timer;
     boolean onfirstonly=true;
+    //Calendar calendar;
+    Calendar now;
     private ArrayList<Question> questions = new ArrayList<>();
 
     @Override
@@ -65,6 +69,8 @@ public class PlayFragment extends Fragment {
         sessionDisplay.setText(sessionName);
         questionDisplay = view.findViewById(R.id.play_tv_question);
         timeDisplay = view.findViewById(R.id.play_tv_timer);
+        now = Calendar.getInstance();
+        //calendar = Calendar.getInstance();
 
         FloatingActionButton b = view.findViewById(R.id.play_fab);
         b.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +176,11 @@ public class PlayFragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, @Nullable String s) {
                 String sessname = dataSnapshot.child("SessionName").getValue(String.class);
                 String text = dataSnapshot.child("QuestionText").getValue(String.class);
-                if(sessname.equals(sessionName)) {
+                Date expDate = dataSnapshot.child("ExpirationDate").getValue(Date.class);
+                boolean active = dataSnapshot.child("IsActive").getValue(boolean.class);
+                //calendar.setTime(expDate);
+                if(sessname.equals(sessionName) && active && expDate.after(now.getTime())) {
+
                     questions.add(new Question(sessname, text));
                     if(onfirstonly){
                         actualQuestion = questions.get(actualPosition);

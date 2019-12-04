@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.time.Duration;
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 
@@ -59,8 +60,8 @@ public class FirebaseDB {
             return key;
         }
 
-        public static String InsertQuestion(String question, String sessionName) {
-            Question quest = new Question(sessionName,question);
+        public static String InsertQuestion(String question, String sessionName,boolean active, Date date) {
+            Question quest = new Question(sessionName,question,active,date);
             String key = questionsReference.push().getKey();
             questionsReference.child(key).setValue(quest);
             return key;

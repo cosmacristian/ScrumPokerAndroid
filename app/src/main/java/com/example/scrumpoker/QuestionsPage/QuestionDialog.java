@@ -8,11 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.scrumpoker.Models.Question;
 import com.example.scrumpoker.R;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,12 +25,14 @@ import androidx.fragment.app.DialogFragment;
 public class QuestionDialog extends DialogFragment {
 
     public interface onInputSelected{
-        void sendInput(String input,int pos,boolean isEdit);
+        void sendInput(String input,Date date,int pos,boolean isEdit);
     }
 
     public onInputSelected inputSelected;
     private EditText questionText;
+    private DatePicker datePicker;
     Context actualContext;
+    Calendar calendar;
     private Question questionItem;
     private int editPosition;
     private boolean isEdit;
@@ -66,13 +72,19 @@ public class QuestionDialog extends DialogFragment {
             }
         });
         questionText.setText(questionItem.QuestionText);
+        datePicker = view.findViewById(R.id.question_text_fragment_datePicker);
+        calendar = Calendar.getInstance();
+        calendar.setTime(questionItem.ExpirationDate);
+        datePicker.updateDate(calendar.get(calendar.YEAR), calendar.get(calendar.MONTH),calendar.get(calendar.DAY_OF_MONTH));
         return view;
     }
 
     void onOkPressed(){
         String input = questionText.getText().toString();
+        calendar.set(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth());
+        Date selectedDate = calendar.getTime();
         if(!input.equals("")) {
-            inputSelected.sendInput(input,editPosition,isEdit);
+            inputSelected.sendInput(input,selectedDate,editPosition,isEdit);
             getDialog().dismiss();
         }
 

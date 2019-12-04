@@ -5,5 +5,7 @@ public interface OnItemClickListener {
 
     void onDeleteClick(int position);
 
+    void onSwitchClick(int position);
+
     void onLongPress(int position);
 }

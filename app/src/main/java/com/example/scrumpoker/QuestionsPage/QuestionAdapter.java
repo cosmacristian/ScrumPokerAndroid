@@ -5,11 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.scrumpoker.Models.Question;
 import com.example.scrumpoker.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -48,7 +50,10 @@ class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewH
     @Override
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
         Question currentItem = questionList.get(position);
+        SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
         holder.questionText.setText(currentItem.QuestionText);
+        holder.dateText.setText(simpleDate.format(currentItem.ExpirationDate));
+        holder.isActive.setChecked(currentItem.IsActive);
     }
 
     @Override
@@ -59,14 +64,17 @@ class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewH
     public static class QuestionViewHolder extends RecyclerView.ViewHolder {
 
         public TextView questionText;
+        public TextView dateText;
         public ImageView DeleteQuestion;
-
+        public Switch isActive;
 
         public QuestionViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
 
             questionText = itemView.findViewById(R.id.question_item_text);
             DeleteQuestion = itemView.findViewById(R.id.question_item_delete);
+            dateText = itemView.findViewById(R.id.question_item_date);
+            isActive = itemView.findViewById(R.id.question_item_switch);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -101,6 +109,18 @@ class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewH
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             listener.onDeleteClick(position);
+                        }
+                    }
+                }
+            });
+
+            isActive.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onSwitchClick(position);
                         }
                     }
                 }

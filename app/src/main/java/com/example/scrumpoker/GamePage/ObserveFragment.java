@@ -40,6 +40,8 @@ public class ObserveFragment extends Fragment {
     AnswerAdapter answerAdapter;
     RecyclerView.LayoutManager answerLayoutManager;
     ArrayList<Answer> answers = new ArrayList<>();
+    Map <String,Integer> freq = new HashMap<String,Integer>();
+    Map <String,Integer> answ = new HashMap<String,Integer>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -126,9 +128,30 @@ public class ObserveFragment extends Fragment {
                 String atext = dataSnapshot.child("AnswerText").getValue(String.class);
                 String user = dataSnapshot.child("CreatedByUID").getValue(String.class);
                 if (sessname.equals(sessionName)) {
-                    //if(answers.)//  when this works create uniques
-                    answers.add(new Answer(sessname,qtext,atext,user));
-                    answerAdapter.notifyItemInserted(answers.size());
+                    if(answers.isEmpty()) {//  when this works create uniques
+                        answers.add(new Answer(sessname, qtext, atext, user));
+                        answ.put(qtext,Integer.getInteger(atext));
+                        freq.put(qtext,1);
+                        answerAdapter.notifyItemInserted(answers.size());
+                    }else{
+                        boolean found = false;
+                        for(Answer a : answers){
+                            if(a.QuestionText.equals(qtext)){
+                                found = true;
+                                answ.put(qtext,(answ.get(qtext)+Integer.getInteger(atext)));
+                                freq.put(qtext,(freq.get(qtext)+1));
+                                float avg = (answ.get(qtext)/freq.get(qtext));
+                                a.AnswerText = String.valueOf(avg);
+                                answerAdapter.notifyItemInserted(answers.indexOf(a));
+                            }
+                        }
+                        if(!found){
+                            answers.add(new Answer(sessname, qtext, atext, user));
+                            answ.put(qtext,Integer.getInteger(atext));
+                            freq.put(qtext,1);
+                            answerAdapter.notifyItemInserted(answers.size());
+                        }
+                    }
                 }
 
             }
