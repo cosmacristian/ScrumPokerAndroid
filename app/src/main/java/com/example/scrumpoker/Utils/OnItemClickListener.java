@@ -1,4 +1,4 @@
-package com.example.scrumpoker.QuestionsPage;
+package com.example.scrumpoker.Utils;
 
 public interface OnItemClickListener {
     void onItemClick(int position);

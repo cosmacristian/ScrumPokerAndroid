@@ -1,4 +1,4 @@
-package com.example.scrumpoker.GamePage;
+package com.example.scrumpoker.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.scrumpoker.Adapters.AnswerAdapter;
 import com.example.scrumpoker.Models.Answer;
 import com.example.scrumpoker.Models.SessionState;
-import com.example.scrumpoker.Models.Sessions;
 import com.example.scrumpoker.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;

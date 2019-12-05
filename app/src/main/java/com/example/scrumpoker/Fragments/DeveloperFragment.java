@@ -1,4 +1,4 @@
-package com.example.scrumpoker.PokerPage;
+package com.example.scrumpoker.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.scrumpoker.Utils.NameDialog;
 import com.example.scrumpoker.R;
 import com.google.firebase.auth.FirebaseAuth;
 

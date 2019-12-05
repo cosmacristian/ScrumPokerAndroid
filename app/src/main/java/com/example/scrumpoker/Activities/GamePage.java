@@ -1,4 +1,4 @@
-package com.example.scrumpoker.GamePage;
+package com.example.scrumpoker.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -7,11 +7,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.scrumpoker.PokerPage.DeveloperFragment;
-import com.example.scrumpoker.PokerPage.MasterFragment;
+import com.example.scrumpoker.Fragments.ObserveFragment;
+import com.example.scrumpoker.Fragments.PlayFragment;
 import com.example.scrumpoker.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class GamePage extends AppCompatActivity {
     String sessionName;

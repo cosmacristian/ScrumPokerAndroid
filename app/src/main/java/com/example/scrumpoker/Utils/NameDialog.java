@@ -1,4 +1,4 @@
-package com.example.scrumpoker.PokerPage;
+package com.example.scrumpoker.Utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.scrumpoker.GamePage.GamePage;
-import com.example.scrumpoker.QuestionsPage.QuestionsPage;
+import com.example.scrumpoker.Activities.GamePage;
+import com.example.scrumpoker.Activities.QuestionsPage;
 import com.example.scrumpoker.R;
 
 import androidx.annotation.NonNull;

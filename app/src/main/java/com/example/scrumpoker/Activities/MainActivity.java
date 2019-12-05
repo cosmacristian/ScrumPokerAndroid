@@ -1,10 +1,10 @@
-package com.example.scrumpoker;
+package com.example.scrumpoker.Activities;
 
 import android.os.Bundle;
 
 
-import com.example.scrumpoker.Database.FirebaseDB;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.scrumpoker.Fragments.MainPageFragment;
+import com.example.scrumpoker.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;

@@ -1,4 +1,4 @@
-package com.example.scrumpoker.PokerPage;
+package com.example.scrumpoker.Utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,14 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.example.scrumpoker.GamePage.GamePage;
-import com.example.scrumpoker.Models.Question;
-import com.example.scrumpoker.QuestionsPage.QuestionsPage;
+import com.example.scrumpoker.Activities.GamePage;
+import com.example.scrumpoker.Activities.QuestionsPage;
 import com.example.scrumpoker.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;

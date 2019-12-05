@@ -1,31 +1,27 @@
-package com.example.scrumpoker.QuestionsPage;
+package com.example.scrumpoker.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.example.scrumpoker.Adapters.QuestionAdapter;
 import com.example.scrumpoker.Database.FirebaseDB;
 import com.example.scrumpoker.Models.Question;
 import com.example.scrumpoker.Models.Sessions;
-import com.example.scrumpoker.Models.Users;
-import com.example.scrumpoker.PokerPage.DeveloperFragment;
-import com.example.scrumpoker.PokerPage.MasterFragment;
-import com.example.scrumpoker.PokerPage.NameDialog;
+import com.example.scrumpoker.Utils.NumberPickerDialog;
+import com.example.scrumpoker.Utils.OnItemClickListener;
+import com.example.scrumpoker.Utils.QuestionDialog;
 import com.example.scrumpoker.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;

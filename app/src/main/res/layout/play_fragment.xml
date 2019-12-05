@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/colorPrimaryDark" />
 
     <TextView
         android:id="@+id/play_tv_question"
@@ -18,6 +19,7 @@
         android:gravity="center"
         android:paddingTop="50dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/colorAccent"
         android:textSize="24sp" />
 
     <TextView

@@ -1,4 +1,4 @@
-package com.example.scrumpoker.GamePage;
+package com.example.scrumpoker.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,15 +6,11 @@ import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.scrumpoker.Database.FirebaseDB;
 import com.example.scrumpoker.Models.Question;
-import com.example.scrumpoker.PokerPage.MasterFragment;
-import com.example.scrumpoker.PokerPage.NameDialog;
-import com.example.scrumpoker.PokerPage.SessionsDialog;
 import com.example.scrumpoker.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;

@@ -1,4 +1,4 @@
-package com.example.scrumpoker.QuestionsPage;
+package com.example.scrumpoker.Utils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

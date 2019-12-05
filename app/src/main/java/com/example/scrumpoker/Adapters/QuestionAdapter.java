@@ -1,14 +1,14 @@
-package com.example.scrumpoker.QuestionsPage;
+package com.example.scrumpoker.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.scrumpoker.Models.Question;
+import com.example.scrumpoker.Utils.OnItemClickListener;
 import com.example.scrumpoker.R;
 
 import java.text.SimpleDateFormat;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder> {
+public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder> {
 
 
     private ArrayList<Question> questionList;

@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GamePage.GamePage"></activity>
-        <activity android:name=".QuestionsPage.QuestionsPage" />
-        <activity android:name=".PokerPage.ScrumPokerPage" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.GamePage"></activity>
+        <activity android:name=".Activities.QuestionsPage" />
+        <activity android:name=".Activities.ScrumPokerPage" />
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

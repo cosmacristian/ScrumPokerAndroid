@@ -1,4 +1,4 @@
-package com.example.scrumpoker;
+package com.example.scrumpoker.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.scrumpoker.Database.FirebaseDB;
-import com.example.scrumpoker.PokerPage.ScrumPokerPage;
+import com.example.scrumpoker.Activities.ScrumPokerPage;
+import com.example.scrumpoker.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -28,7 +29,7 @@ public class MainPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.example_fragment, container, false);
+        View view=inflater.inflate(R.layout.login_fragment, container, false);
         actualContext = getContext();
         if(savedInstanceState != null){
             return view;

@@ -1,14 +1,11 @@
-package com.example.scrumpoker.GamePage;
+package com.example.scrumpoker.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.scrumpoker.Models.Answer;
-import com.example.scrumpoker.Models.Question;
-import com.example.scrumpoker.QuestionsPage.OnItemClickListener;
 import com.example.scrumpoker.R;
 
 import java.util.ArrayList;
