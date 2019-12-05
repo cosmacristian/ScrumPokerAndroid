@@ -22,7 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 public class MainPageFragment extends Fragment {
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     EditText email;
     EditText password;
     Context actualContext;
@@ -34,7 +34,7 @@ public class MainPageFragment extends Fragment {
         if(savedInstanceState != null){
             return view;
         }
-        mAuth = FirebaseAuth.getInstance();
+
         Button b = view.findViewById(R.id.login_btn_login);
         b.setOnClickListener(new View.OnClickListener() {
             @Override

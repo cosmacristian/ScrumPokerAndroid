@@ -11,6 +11,21 @@
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/colorPrimaryDark" />
+<!--
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/play_fab"
+        style="@style/Widget.Design.FloatingActionButton"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="Sumbit answer"
+        android:foregroundGravity="top|right"
+        android:src="@android:drawable/ic_menu_send"
+        app:backgroundTint="@color/colorPrimary" />-->
 
     <TextView
         android:id="@+id/play_tv_question"
@@ -29,7 +44,7 @@
         android:gravity="center"
         android:paddingTop="20dp"
         android:paddingBottom="20dp" />
-
+<!--
     <Spinner
         android:id="@+id/play_sp_dropdown"
         android:layout_width="match_parent"
@@ -37,19 +52,17 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:entries="@array/points_arrays"
-        android:gravity="center"/>
+        android:gravity="center"/>-->
+    <GridView
+        android:id="@+id/play_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnWidth="100dp"
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="spacingWidthUniform"
+        android:verticalSpacing="24dp" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/play_fab"
-        style="@style/Widget.Design.FloatingActionButton"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="Sumbit answer"
-        android:src="@android:drawable/ic_menu_send"
-        app:backgroundTint="@color/colorPrimary" />
+
 </LinearLayout>

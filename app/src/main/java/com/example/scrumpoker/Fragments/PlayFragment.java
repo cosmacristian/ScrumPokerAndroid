@@ -6,9 +6,12 @@ import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.scrumpoker.Adapters.GridViewAdapter;
 import com.example.scrumpoker.Database.FirebaseDB;
 import com.example.scrumpoker.Models.Question;
 import com.example.scrumpoker.R;
@@ -38,12 +41,12 @@ public class PlayFragment extends Fragment {
     int actualPosition=0;
     Question actualQuestion;
 
-    Spinner answersDropDown;
     TextView sessionDisplay;
     TextView questionDisplay;
     TextView timeDisplay;
     CountDownTimer timer;
     boolean onfirstonly=true;
+    GridView gridView;
     //Calendar calendar;
     Calendar now;
     private ArrayList<Question> questions = new ArrayList<>();
@@ -59,22 +62,24 @@ public class PlayFragment extends Fragment {
         sessionName = getArguments().getString("sessionName");
         sessionAction = getArguments().getString("sessionAction");
         // Inflate the layout for this fragment
-        answersDropDown = view.findViewById(R.id.play_sp_dropdown);
-        answersDropDown.setVisibility(View.INVISIBLE);
         sessionDisplay = view.findViewById(R.id.play_tv_session);
         sessionDisplay.setText(sessionName);
         questionDisplay = view.findViewById(R.id.play_tv_question);
         timeDisplay = view.findViewById(R.id.play_tv_timer);
         now = Calendar.getInstance();
-        //calendar = Calendar.getInstance();
 
-        FloatingActionButton b = view.findViewById(R.id.play_fab);
-        b.setOnClickListener(new View.OnClickListener() {
+        gridView = view.findViewById(R.id.play_gridview);
+        final int []values= {0,1,2,3,5,8,13,20,40};
+        GridViewAdapter valuesAdapter = new GridViewAdapter(view.getContext(),values );
+        gridView.setAdapter(valuesAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                sendAnswer();
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                int value = values[position];
+                sendAnswer(value);
             }
         });
+        gridView.setVisibility(View.GONE);
 
         DatabaseReference sessionStateReference = database.getReference().child("SessionsState");
         sessionStateReference.addChildEventListener(new ChildEventListener() {
@@ -181,18 +186,20 @@ public class PlayFragment extends Fragment {
                     if(onfirstonly){
                         actualQuestion = questions.get(actualPosition);
                         questionDisplay.setText(actualQuestion.QuestionText);            ///This might not work
-                        timer = new CountDownTimer(timeLimit * 60000, 1000) {
+                        if(timeLimit > 0) {
+                            timer = new CountDownTimer(timeLimit * 60000, 1000) {
 
-                            public void onTick(long millisUntilFinished) {
-                                timeDisplay.setText("Time remaining: " + millisUntilFinished / 60000 +":"+millisUntilFinished / 1000);
-                            }
+                                public void onTick(long millisUntilFinished) {
+                                    timeDisplay.setText("Time remaining: " + millisUntilFinished / 60000 + ":" + millisUntilFinished / 1000);
+                                }
 
-                            public void onFinish() {
-                                nextQuestion();
-                            }
+                                public void onFinish() {
+                                    nextQuestion();
+                                }
 
-                        }.start();
-                        answersDropDown.setVisibility(View.VISIBLE);
+                            }.start();
+                        }
+                        gridView.setVisibility(View.VISIBLE);
                         onfirstonly =false;
                     }
                 }
@@ -218,8 +225,8 @@ public class PlayFragment extends Fragment {
 
     }
 
-    void sendAnswer(){
-        String input = String.valueOf(answersDropDown.getSelectedItem());
+    void sendAnswer(int value){
+        String input = String.valueOf(value);
         if(!input.equals("")) {
             FirebaseDB.Instance.InsertResponse(sessionName,actualQuestion.QuestionText,input,mAuth.getUid() );
             nextQuestion();
