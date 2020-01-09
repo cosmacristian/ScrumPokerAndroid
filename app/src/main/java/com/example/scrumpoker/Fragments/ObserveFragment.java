@@ -128,9 +128,9 @@ public class ObserveFragment extends Fragment {
                 String atext = dataSnapshot.child("AnswerText").getValue(String.class);
                 String user = dataSnapshot.child("CreatedByUID").getValue(String.class);
                 if (sessname.equals(sessionName)) {
-                    if(answers.isEmpty()) {//  when this works create uniques
+                    if(answ.get(qtext) == null) {//  when this works create uniques
                         answers.add(new Answer(sessname, qtext, atext, user));
-                        answ.put(qtext,Integer.getInteger(atext));
+                        answ.put(qtext,Integer.parseInt(atext));
                         freq.put(qtext,1);
                         answerAdapter.notifyItemInserted(answers.size());
                     }else{
@@ -138,7 +138,7 @@ public class ObserveFragment extends Fragment {
                         for(Answer a : answers){
                             if(a.QuestionText.equals(qtext)){
                                 found = true;
-                                answ.put(qtext,(answ.get(qtext)+Integer.getInteger(atext)));
+                                answ.put(qtext,(answ.get(qtext)+Integer.parseInt(atext)));
                                 freq.put(qtext,(freq.get(qtext)+1));
                                 float avg = (answ.get(qtext)/freq.get(qtext));
                                 a.AnswerText = String.valueOf(avg);
@@ -147,7 +147,7 @@ public class ObserveFragment extends Fragment {
                         }
                         if(!found){
                             answers.add(new Answer(sessname, qtext, atext, user));
-                            answ.put(qtext,Integer.getInteger(atext));
+                            answ.put(qtext,Integer.parseInt(atext));
                             freq.put(qtext,1);
                             answerAdapter.notifyItemInserted(answers.size());
                         }
